@@ -229,6 +229,15 @@ void SensorBridge::HandleRangefinder(
   if (!ranges.empty()) {
     CHECK_LE(ranges.back().time, 0.f);
   }
+
+  carto::sensor::TimedPointCloud filtered;
+  filtered.reserve(ranges.size());
+  for(auto& item : ranges)
+  {
+      if(item.position.z() > - 0.1f)
+          filtered.push_back(item);
+  }
+
   const auto sensor_to_tracking =
       tf_bridge_.LookupToTracking(time, CheckNoLeadingSlash(frame_id));
   if (sensor_to_tracking != nullptr) {
@@ -236,7 +245,7 @@ void SensorBridge::HandleRangefinder(
         sensor_id, carto::sensor::TimedPointCloudData{
                        time, sensor_to_tracking->translation().cast<float>(),
                        carto::sensor::TransformTimedPointCloud(
-                           ranges, sensor_to_tracking->cast<float>())});
+                           filtered, sensor_to_tracking->cast<float>())});
   }
 }
 
