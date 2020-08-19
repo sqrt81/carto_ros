@@ -283,6 +283,18 @@ void MapBuilderBridge::HandleTrajectoryQuery(
       " trajectory nodes from trajectory ", request.trajectory_id, ".");
 }
 
+void MapBuilderBridge::HandleRelocation(
+        const geometry_msgs::Pose &posture)
+{
+    cartographer::sensor::OdometryData odom;
+    odom.pose = {{posture.position.x, posture.position.y, posture.position.z},
+                 {posture.orientation.w, posture.orientation.x,
+                  posture.orientation.y, posture.orientation.z}};
+    odom.time = FromRos(ros::Time::now());
+
+    map_builder_->GetTrajectoryBuilder(1)->AddSensorData("", odom);
+}
+
 visualization_msgs::MarkerArray MapBuilderBridge::GetTrajectoryNodeList() {
   visualization_msgs::MarkerArray trajectory_node_list;
   const auto node_poses = map_builder_->pose_graph()->GetTrajectoryNodePoses();

@@ -90,6 +90,8 @@ class MapBuilderBridge {
       cartographer_ros_msgs::TrajectoryQuery::Request& request,
       cartographer_ros_msgs::TrajectoryQuery::Response& response);
 
+  void HandleRelocation(const geometry_msgs::Pose &posture);
+
   std::map<int /* trajectory_id */,
            ::cartographer::mapping::PoseGraphInterface::TrajectoryState>
   GetTrajectoryStates();

@@ -47,6 +47,7 @@ add_service_files(
     FinishTrajectory.srv
     GetTrajectoryStates.srv
     ReadMetrics.srv
+    Relocate.srv
     StartTrajectory.srv
     SubmapQuery.srv
     TrajectoryQuery.srv

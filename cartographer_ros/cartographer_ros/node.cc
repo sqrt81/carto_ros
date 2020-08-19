@@ -127,6 +127,8 @@ Node::Node(
       kGetTrajectoryStatesServiceName, &Node::HandleGetTrajectoryStates, this));
   service_servers_.push_back(node_handle_.advertiseService(
       kReadMetricsServiceName, &Node::HandleReadMetrics, this));
+  service_servers_.push_back(node_handle_.advertiseService(
+      kRelocationServiceName, &Node::HandleRelocation, this));
 
   scan_matched_point_cloud_publisher_ =
       node_handle_.advertise<sensor_msgs::PointCloud2>(
@@ -699,6 +701,18 @@ bool Node::HandleReadMetrics(
   response.status.code = cartographer_ros_msgs::StatusCode::OK;
   response.status.message = "Successfully read metrics.";
   return true;
+}
+
+bool Node::HandleRelocation(
+    ::cartographer_ros_msgs::Relocate::Request &request,
+    ::cartographer_ros_msgs::Relocate::Response &response)
+{
+    absl::MutexLock lock(&mutex_);
+
+    map_builder_bridge_.HandleRelocation(request.ideal_pose);
+    response.success = true;
+
+    return true;
 }
 
 void Node::FinishAllTrajectories() {
