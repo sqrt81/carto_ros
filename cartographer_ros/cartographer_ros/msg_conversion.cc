@@ -219,7 +219,7 @@ ToPointCloudWithIntensities(const sensor_msgs::PointCloud2& msg) {
   // We check for intensity field here to avoid run-time warnings if we pass in
   // a PointCloud2 without intensity.
   if (PointCloud2HasField(msg, "intensity")) {
-    if (PointCloud2HasField(msg, "time")) {
+    if (PointCloud2HasField(msg, "time") && /* DISABLES CODE */ (false)) {
       pcl::PointCloud<PointXYZIT> pcl_point_cloud;
       pcl::fromROSMsg(msg, pcl_point_cloud);
       point_cloud.points.reserve(pcl_point_cloud.size());
@@ -242,7 +242,7 @@ ToPointCloudWithIntensities(const sensor_msgs::PointCloud2& msg) {
     }
   } else {
     // If we don't have an intensity field, just copy XYZ and fill in 1.0f.
-    if (PointCloud2HasField(msg, "time")) {
+    if (PointCloud2HasField(msg, "time") && /* DISABLES CODE */ (false)) {
       pcl::PointCloud<PointXYZT> pcl_point_cloud;
       pcl::fromROSMsg(msg, pcl_point_cloud);
       point_cloud.points.reserve(pcl_point_cloud.size());

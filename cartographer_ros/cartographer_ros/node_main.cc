@@ -71,7 +71,7 @@ void Run() {
   ::ros::spin();
 
   node.FinishAllTrajectories();
-  node.RunFinalOptimization();
+  //node.RunFinalOptimization();
 
   if (!FLAGS_save_state_filename.empty()) {
     node.SerializeState(FLAGS_save_state_filename,

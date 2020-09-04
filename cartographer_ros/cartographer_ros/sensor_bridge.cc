@@ -234,7 +234,8 @@ void SensorBridge::HandleRangefinder(
   filtered.reserve(ranges.size());
   for(auto& item : ranges)
   {
-      if(item.position.z() > - 0.1f)
+      // do a height filter
+      //if(item.position.z() > - 2.5f && item.position.z() < 5.f)
           filtered.push_back(item);
   }
 
