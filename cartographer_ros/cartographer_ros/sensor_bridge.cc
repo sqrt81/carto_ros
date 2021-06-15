@@ -234,6 +234,7 @@ void SensorBridge::HandleRangefinder(
   filtered.reserve(ranges.size());
   for(auto& item : ranges)
   {
+      // 修改：（可选）只保留一定高度以内的点云数据。这样栅格地图的高度不会太大。
       // do a height filter
       //if(item.position.z() > - 2.5f && item.position.z() < 5.f)
           filtered.push_back(item);

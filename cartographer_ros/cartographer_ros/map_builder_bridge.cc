@@ -283,6 +283,7 @@ void MapBuilderBridge::HandleTrajectoryQuery(
       " trajectory nodes from trajectory ", request.trajectory_id, ".");
 }
 
+// 修改：增加一个用于重新定位的服务
 void MapBuilderBridge::HandleRelocation(
         const geometry_msgs::Pose &posture)
 {
